@@ -11,7 +11,7 @@ const serializeFolder = (folder) => ({
 
 
 router
-  .route('/folders')
+  .route('/')
   .get((req, res, next) => {
     folderServices
       .getAllFolders(req.app.get('db'))
@@ -36,3 +36,31 @@ router
           .json({ id: folder.id });
       });
   });
+
+router
+  .route('/:id')
+  .all((req, res, next) => {
+    folderServices.getFolderById(req.app.get('db'), req.params.id)
+      .then((folder) => {
+        if (!folder) {
+          return res.status(404).json({
+            error: { message: `Folder doesn't exist` }
+          });
+        }
+        res.folder = folder; // save the article for the next middleware
+        next(); // don't forget to call next so the next middleware happens!
+      })
+      .catch(next);
+  })
+  .get((req, res) => {
+    res.json(
+      serializeFolder(res.folder)
+    )
+  })
+  .delete((req, res, next) => {
+    folderServices.deleteFolder(req.app.get('db'), req.params.id)
+      .then(() => res.status (204).end())
+      .catch(next);
+  })
+
+module.exports = router;
