@@ -8,7 +8,7 @@ const serializeNote = (Note) => ({
   id: Note.id,
   name: xss(Note.name),
   modified: Note.modified,
-  folderid: Note.folderid,
+  folderId: Note.folderId,
   content: xss(Note.content)
 });
 
@@ -24,11 +24,11 @@ router
       .catch(next);
   })
   .post((req, res) => {
-    let { name, folderid, content } = req.body;
+    let { name, folderId, content } = req.body;
     if (!name) {
       return res.status(400).send('Name is required');
     }
-    if (!folderid) {
+    if (!folderId) {
       return res.status(400).send('A folder is required mannnn');
     }
     if (!content) {
@@ -36,7 +36,7 @@ router
     }
     let newNote = {
       name,
-      folderid,
+      folderId,
       content
 
     };
