@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const NoteServices = require('./NoteServices');
+const NoteServices = require('./noteServices');
 const xss = require('xss');
 router.use(express.json());
 
