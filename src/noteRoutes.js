@@ -73,7 +73,8 @@ router
     NoteServices.deleteNote(req.app.get('db'), req.params.id)
       .then((Note) => {
         return res.status(204)
-          .json(Note);
+          .end();
+        
       })
 
       .catch(next);

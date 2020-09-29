@@ -33,7 +33,7 @@ router
       .then((folder) => {
         res.status(201)
           .location(`http://localhost/folders${folder.id}`)
-          .json({ id: folder.id });
+          .json(folder);
       });
   });
 
