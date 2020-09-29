@@ -45,7 +45,7 @@ router
       .then((Note) => {
         res.status(201)
           .location(`http://localhost/Notes${Note.id}`)
-          .json({ id: Note.id });
+          .json(Note);
       });
   });
 
@@ -71,7 +71,11 @@ router
   })
   .delete((req, res, next) => {
     NoteServices.deleteNote(req.app.get('db'), req.params.id)
-      .then(() => res.status (204).end())
+      .then((Note) => {
+        return res.status(204)
+          .json(Note);
+      })
+
       .catch(next);
   })
 
